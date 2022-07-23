@@ -1,5 +1,8 @@
+const workout = require("../database/Workout.js");
+
 const getAllWorkouts = () => { 
-  return; 
+  const allWorkouts = workout.getAllWorkouts();
+  return allWorkouts; 
 };
 const getWorkoutById = () => { 
   return; 
@@ -13,3 +16,11 @@ const updateWorkout = () => {
 const deleteWorkout = () => { 
   return; 
 };
+
+module.exports = {
+  getAllWorkouts,
+  getWorkoutById,
+  createWorkout,
+  updateWorkout,
+  deleteWorkout
+}
