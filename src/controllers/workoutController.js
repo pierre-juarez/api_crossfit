@@ -6,15 +6,23 @@ const getAllWorkouts = (req, res) => {
 }
 
 const getWorkoutById = (req, res) => {
-  const oneWorkout = workoutService.getWorkoutById(req.params.workoutId);
-  res.send(`Get workout with id: ${req.params.workoutId}`);
+  const { params: {workoutId} } = req;
+  if(!workoutId){ return; }
+  const oneWorkout = workoutService.getWorkoutById(workoutId);
+  res.send({status: 'OK', data: oneWorkout});
 }
 
 const createWorkout = (req, res) => {
   const { body } = req;
 
-  if( !body.name || !body.mode || !body.equipment || !body.exercises || !body.trainerTips ) {
-    return;
+  if( 
+      !body.name || 
+      !body.mode || 
+      !body.equipment || 
+      !body.exercises || 
+      !body.trainerTips 
+    ) {
+    rturn;
   }
 
   const newWorkout = {
@@ -30,13 +38,17 @@ const createWorkout = (req, res) => {
 }
 
 const updateWorkout = (req, res) => {
-  const updatedWordkout = workoutService.updateWorkout(req.params.workoutId);
-  res.send(`Update workout with id: ${req.params.workoutId}`);
+  const { body, params: { workoutId } } = req;
+  if(!workoutId){ return; }
+  const updatedWorkout = workoutService.updateWorkout(workoutId, body);
+  res.send({ status: 'OK', data: updatedWorkout });
 }
 
 const deleteWorkout = (req, res) => {
-  workoutService.deleteWorkout(req.params.workoutId);
-  res.send(`Delete workout with id: ${req.params.workoutId}`);
+  const { params: { workoutId } } = req;
+  if(!workoutId){ return; }
+  workoutService.deleteWorkout(workoutId);
+  res.status(204).send({ status: 'OK', msg:'Workout deleted successfully' });
 }
 
 module.exports = {
